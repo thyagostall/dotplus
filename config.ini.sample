@@ -1,0 +1,7 @@
+[DEFAULT]
+email = your@email.com
+password = your-very-secret-password
+
+[URLS]
+sign_in = https://dotplus.co.uk/sign_in
+time_cards = https://dotplus.co.uk/timecards?start_date={0}&end_date={1}
