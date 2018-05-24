@@ -2,12 +2,12 @@ import collections
 import configparser
 
 
-Config = collections.namedtuple('Config', [
-    'email',
-    'password',
-    'sign_in_url',
-    'time_cards_url',
-    ])
+class Config:
+    def __init__(self, email, password, sign_in_url, time_cards_url):
+        self.email = email
+        self.password = password
+        self.sign_in_url = sign_in_url
+        self.time_cards_url = time_cards_url
 
 
 def read_config(config_filename):

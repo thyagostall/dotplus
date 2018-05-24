@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 import pytest
 import requests
@@ -42,7 +43,10 @@ def test_time_cards_should_return_time_cards(mock_get):
     mock_get.return_value = _create_successful_time_cards_response()
     credentials = create_credentials_for_tests()
 
-    time_cards = dotplus.time_cards(credentials)
+    start_date = date(2018, 5, 1)
+    end_date = date(2018, 5, 2)
+
+    time_cards = dotplus.time_cards(credentials, start_date, end_date)
 
     first_time_card = time_cards[0]
 
