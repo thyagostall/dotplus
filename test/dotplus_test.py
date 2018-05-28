@@ -1,52 +1,21 @@
 import json
 from datetime import date
 
-import pytest
+import mock
 import requests
 
 import dotplus
-import mock
-
-
-@mock.patch('requests.post')
-def test_login_should_return_credentials(mock_post):
-    mock_post.return_value = _create_successful_login_response()
-
-    config = create_config_for_tests()
-    credentials = dotplus.login(config)
-
-    assert credentials.client_id is not None
-    assert credentials.token is not None
-    assert credentials.config == config
-
-
-@mock.patch('requests.post')
-def test_login_with_invalid_credentials_should_raise(mock_post):
-    mock_post.return_value = _create_invalid_credentials_login_response()
-
-    config = create_config_with_invalid_credentials()
-    with pytest.raises(dotplus.InvalidCredentialsError):
-        dotplus.login(config)
-
-
-@mock.patch('requests.post')
-def test_login_with_connection_timeout_should_raise(mock_post):
-    mock_post.return_value = _create_timeout_login_response()
-
-    config = create_config_for_timeout()
-    with pytest.raises(Exception):
-        dotplus.login(config)
 
 
 @mock.patch('requests.get')
 def test_time_cards_should_return_time_cards(mock_get):
     mock_get.return_value = _create_successful_time_cards_response()
-    credentials = create_credentials_for_tests()
+    dotplus.dotplus.resolve_config = create_config_for_tests
 
     start_date = date(2018, 5, 1)
     end_date = date(2018, 5, 2)
 
-    time_cards = dotplus.time_cards(credentials, start_date, end_date)
+    time_cards = dotplus.time_cards(start_date, end_date)
 
     first_time_card = time_cards[0]
 

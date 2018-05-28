@@ -1,9 +1,11 @@
 import json
+import os
 from datetime import date
+from pathlib import Path
 
 import requests
 
-from dotplus.config import Config
+from dotplus.config import Config, read_config
 
 
 class Credentials:
@@ -26,11 +28,17 @@ class InvalidCredentialsError(Exception):
     pass
 
 
-def entry_point(email: str, password: str, start_date: date, end_date: date):
-    pass
+def time_cards(start_date: date, end_date: date) -> [dict]:
+    config = resolve_config()
+    credentials = _login(config)
+    return _time_cards(credentials, start_date, end_date)
 
 
-def login(config: Config) -> Credentials:
+def resolve_config():
+    return read_config(os.path.join(Path.home(), '.dotplusrc'))
+
+
+def _login(config: Config) -> Credentials:
     credentials = {'login': config.email, 'password': config.password}
     headers = {'api-version': '2', 'content-type': 'application/json;charset=UTF-8'}
 
@@ -45,7 +53,7 @@ def login(config: Config) -> Credentials:
         raise InvalidCredentialsError
 
 
-def time_cards(credentials: Credentials, start_date: date, end_date: date):
+def _time_cards(credentials: Credentials, start_date: date, end_date: date) -> [dict]:
     url = UrlFactory.time_cards(credentials.config.time_cards_url, start_date, end_date)
 
     headers = {
