@@ -29,7 +29,7 @@ setup(
         'pytest==3.5.1',
         'requests==2.18.4',
         'six==1.11.0',
-        'urllib3==1.22',
+        'urllib3==1.24.2',
         'wrapt==1.10.11',
     ]
 )
