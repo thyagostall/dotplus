@@ -15,7 +15,7 @@ setup(
     install_requires=[
         'astroid==1.6.4',
         'attrs==18.1.0',
-        'certifi==2018.4.16',
+        'certifi==2022.12.7',
         'chardet==3.0.4',
         'idna==2.6',
         'isort==4.3.4',
